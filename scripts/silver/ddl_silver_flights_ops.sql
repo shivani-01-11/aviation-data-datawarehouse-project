@@ -208,6 +208,3 @@ SELECT
 
 FROM bronze.ops_flights
 WHERE NULLIF(TRIM(flight_id), '') IS NOT NULL;
-
-
-select * from silver.ops_flights;
