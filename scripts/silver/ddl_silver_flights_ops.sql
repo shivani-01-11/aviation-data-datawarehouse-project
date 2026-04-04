@@ -58,7 +58,7 @@ CREATE TABLE silver.ops_flights (
 -- Load silver.ops_flights from bronze.ops_flights
 -- ============================================================
 
--- SET v_start_time = NOW();
+
 
 SELECT '>> Truncating Table: silver.ops_flights' AS load_log;
 TRUNCATE TABLE silver.ops_flights;
