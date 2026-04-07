@@ -309,13 +309,26 @@ aviation-data-warehouse/
 ├── docs/
 │   ├── data_catalog_gold.md
 │   ├── naming_conventions.md
-│   └── architecture and project documentation
+│   └── architecture_dw_archotecture.svg
 │
 ├── scripts/
 │   ├── bronze/
+│   │   ├── ddl_bronze.sql
+│   │   ├── load_bronze.sql
+│   │   └── bronze-analysis-and-proofing/
+│   │       ├── bronze_ops_baggage_data_validation_and_profiling.sql
+│   │       ├── bronze_ops_flights_data_validation_and_profiling.sql
+│   │       ├── bronze_pax_passengers_data_validation_and_profiling.sql
+│   │       ├── bronze_ops_gate_events_data_validation_and_profiling.sql
+│   │       └── bronze_ret_retail_transactions_data_validation_and_profiling.sql 
 │   ├── silver/
+│   │   ├── ddl_silver_baggage_ops.sql
+│   │   ├── ddl_silver_flights_ops.sql
+│   │   ├── ddl_silver_passengers_pax.sql
+│   │   ├── ddl_silver_ret_retail_transactions.sql
+│   │   └── ddl_silver_ops_gate_events.sql
 │   └── gold/
-│
+│       └── ddl_gold
 ├── tests/
 │   └── quality_checks_silver.sql
 │
