@@ -320,7 +320,8 @@ aviation-data-warehouse/
 │   │       ├── bronze_ops_flights_data_validation_and_profiling.sql
 │   │       ├── bronze_pax_passengers_data_validation_and_profiling.sql
 │   │       ├── bronze_ops_gate_events_data_validation_and_profiling.sql
-│   │       └── bronze_ret_retail_transactions_data_validation_and_profiling.sql 
+│   │       └── bronze_ret_retail_transactions_data_validation_and_profiling.sql
+│   │ 
 │   ├── silver/
 │   │   ├── ddl_silver_baggage_ops.sql
 │   │   ├── ddl_silver_flights_ops.sql
@@ -328,7 +329,7 @@ aviation-data-warehouse/
 │   │   ├── ddl_silver_ret_retail_transactions.sql
 │   │   └── ddl_silver_ops_gate_events.sql
 │   └── gold/
-│       └── ddl_gold
+│       └── ddl_gold.sql
 ├── tests/
 │   └── quality_checks_silver.sql
 │
