@@ -1,0 +1,438 @@
+<svg width="1400" height="980" viewBox="0 0 1400 980" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Arial, sans-serif">
+
+  <!-- ── Background ── -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f1623"/>
+      <stop offset="100%" stop-color="#151f30"/>
+    </linearGradient>
+    <!-- Arrow markers -->
+    <marker id="arrow-bronze" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto">
+      <path d="M1,1 L8,4 L1,7 Z" fill="#cd6f00"/>
+    </marker>
+    <marker id="arrow-silver" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto">
+      <path d="M1,1 L8,4 L1,7 Z" fill="#3a9960"/>
+    </marker>
+    <marker id="arrow-gold" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto">
+      <path d="M1,1 L8,4 L1,7 Z" fill="#c89b00"/>
+    </marker>
+    <marker id="arrow-join" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto">
+      <path d="M1,1 L8,4 L1,7 Z" fill="#6b8cba"/>
+    </marker>
+    <!-- Glow filter for headers -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="980" fill="url(#bg)"/>
+
+  <!-- ════════════════════════════════════════
+       TITLE
+  ════════════════════════════════════════ -->
+  <text x="700" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8edf5" letter-spacing="1">Aviation Data Warehouse — Medallion Architecture</text>
+  <text x="700" y="66" text-anchor="middle" font-size="12" fill="#5a7499">Database: aviation_dw (MySQL 8)  ·  Schemas: bronze | silver | gold  ·  Two source systems: AOMS &amp; PSRS</text>
+
+  <!-- ════════════════════════════════════════
+       COLUMN HEADERS (layer labels)
+  ════════════════════════════════════════ -->
+  <!-- SOURCE -->
+  <rect x="18" y="80" width="188" height="32" rx="6" fill="#1c2d45"/>
+  <text x="112" y="101" text-anchor="middle" font-size="12" font-weight="700" fill="#7ab3e0">SOURCE SYSTEMS</text>
+
+  <!-- BRONZE -->
+  <rect x="222" y="80" width="228" height="32" rx="6" fill="#3b1f00"/>
+  <text x="336" y="101" text-anchor="middle" font-size="12" font-weight="700" fill="#ffaa44">🥉 BRONZE  ·  Raw Ingestion</text>
+
+  <!-- SILVER -->
+  <rect x="466" y="80" width="250" height="32" rx="6" fill="#0b2b18"/>
+  <text x="591" y="101" text-anchor="middle" font-size="12" font-weight="700" fill="#52d68a">🥈 SILVER  ·  Cleansed &amp; Typed</text>
+
+  <!-- GOLD -->
+  <rect x="732" y="80" width="650" height="32" rx="6" fill="#2b2000"/>
+  <text x="1057" y="101" text-anchor="middle" font-size="12" font-weight="700" fill="#ffd84d">🥇 GOLD  ·  Business-Ready Views</text>
+
+  <!-- ════════════════════════════════════════
+       SOURCE: AOMS
+  ════════════════════════════════════════ -->
+  <rect x="18" y="122" width="188" height="318" rx="8" fill="#122035" stroke="#2a4a6b" stroke-width="1.5"/>
+  <rect x="18" y="122" width="188" height="36" rx="8" fill="#1a3a5c"/>
+  <rect x="18" y="146" width="188" height="12" fill="#1a3a5c"/>
+  <text x="112" y="144" text-anchor="middle" font-size="11" font-weight="700" fill="#7ab3e0">AOMS</text>
+  <text x="112" y="157" text-anchor="middle" font-size="9" fill="#4a7aaa">Airport Operations Mgmt System</text>
+
+  <!-- flights.csv -->
+  <rect x="30" y="168" width="164" height="52" rx="5" fill="#0d1e35" stroke="#2a4a6b" stroke-width="1"/>
+  <text x="42" y="184" font-size="10" font-weight="700" fill="#a0c8f0">✈ flights.csv</text>
+  <text x="42" y="197" font-size="8" fill="#5a8ab0">Grain: 1 row per flight leg</text>
+  <text x="42" y="209" font-size="8" fill="#5a8ab0">32 data columns + 4 DWH meta</text>
+  <text x="42" y="218" font-size="8" fill="#5a8ab0">All columns VARCHAR (raw)</text>
+
+  <!-- baggage.csv -->
+  <rect x="30" y="228" width="164" height="52" rx="5" fill="#0d1e35" stroke="#2a4a6b" stroke-width="1"/>
+  <text x="42" y="244" font-size="10" font-weight="700" fill="#a0c8f0">🧳 baggage.csv</text>
+  <text x="42" y="257" font-size="8" fill="#5a8ab0">Grain: 1 row per baggage tag</text>
+  <text x="42" y="269" font-size="8" fill="#5a8ab0">17 data columns + 4 DWH meta</text>
+  <text x="42" y="278" font-size="8" fill="#5a8ab0">All columns VARCHAR (raw)</text>
+
+  <!-- gate_events.csv -->
+  <rect x="30" y="288" width="164" height="52" rx="5" fill="#0d1e35" stroke="#2a4a6b" stroke-width="1"/>
+  <text x="42" y="304" font-size="10" font-weight="700" fill="#a0c8f0">🚪 gate_events.csv</text>
+  <text x="42" y="317" font-size="8" fill="#5a8ab0">Grain: 1 row per gate event</text>
+  <text x="42" y="329" font-size="8" fill="#5a8ab0">14 data columns + 4 DWH meta</text>
+  <text x="42" y="338" font-size="8" fill="#5a8ab0">All columns VARCHAR (raw)</text>
+
+  <line x1="30" y1="354" x2="194" y2="354" stroke="#2a4a6b" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="112" y="368" text-anchor="middle" font-size="8" fill="#4a7aaa">Load: LOAD DATA INFILE</text>
+  <text x="112" y="380" text-anchor="middle" font-size="8" fill="#4a7aaa">Script: load_bronze.sql</text>
+  <text x="112" y="392" text-anchor="middle" font-size="8" fill="#4a7aaa">DDL: ddl_bronze.sql</text>
+  <text x="112" y="410" text-anchor="middle" font-size="8" fill="#4a7aaa">No PII · No transformation</text>
+  <text x="112" y="422" text-anchor="middle" font-size="8" fill="#4a7aaa">db: aviation_dw</text>
+
+  <!-- ════════════════════════════════════════
+       SOURCE: PSRS
+  ════════════════════════════════════════ -->
+  <rect x="18" y="456" width="188" height="240" rx="8" fill="#1e1228" stroke="#4a2a6b" stroke-width="1.5"/>
+  <rect x="18" y="456" width="188" height="36" rx="8" fill="#341a50"/>
+  <rect x="18" y="480" width="188" height="12" fill="#341a50"/>
+  <text x="112" y="478" text-anchor="middle" font-size="11" font-weight="700" fill="#b07ae0">PSRS</text>
+  <text x="112" y="491" text-anchor="middle" font-size="9" fill="#7a4aaa">Passenger Services &amp; Retail System</text>
+
+  <!-- passengers.csv -->
+  <rect x="30" y="502" width="164" height="52" rx="5" fill="#150d22" stroke="#4a2a6b" stroke-width="1"/>
+  <text x="42" y="518" font-size="10" font-weight="700" fill="#c8a0f0">👤 passengers.csv</text>
+  <text x="42" y="531" font-size="8" fill="#7a5ab0">Grain: 1 row per passenger booking</text>
+  <text x="42" y="543" font-size="8" fill="#7a5ab0">28 data columns + 4 DWH meta</text>
+  <text x="42" y="552" font-size="8" fill="#7a5ab0">Contains PII · All VARCHAR</text>
+
+  <!-- retail_transactions.csv -->
+  <rect x="30" y="562" width="164" height="52" rx="5" fill="#150d22" stroke="#4a2a6b" stroke-width="1"/>
+  <text x="42" y="578" font-size="10" font-weight="700" fill="#c8a0f0">🛍 retail_transactions.csv</text>
+  <text x="42" y="591" font-size="8" fill="#7a5ab0">Grain: 1 row per transaction</text>
+  <text x="42" y="603" font-size="8" fill="#7a5ab0">17 data columns + 4 DWH meta</text>
+  <text x="42" y="612" font-size="8" fill="#7a5ab0">All columns VARCHAR (raw)</text>
+
+  <line x1="30" y1="626" x2="194" y2="626" stroke="#4a2a6b" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="112" y="640" text-anchor="middle" font-size="8" fill="#7a4aaa">Load: LOAD DATA INFILE</text>
+  <text x="112" y="652" text-anchor="middle" font-size="8" fill="#7a4aaa">Script: load_bronze.sql</text>
+  <text x="112" y="664" text-anchor="middle" font-size="8" fill="#7a4aaa">DDL: ddl_bronze.sql</text>
+  <text x="112" y="680" text-anchor="middle" font-size="8" fill="#7a4aaa">db: aviation_dw</text>
+
+  <!-- ════════════════════════════════════════
+       BRONZE TABLES  (x=222)
+  ════════════════════════════════════════ -->
+
+  <!-- bronze.ops_flights -->
+  <rect x="222" y="122" width="228" height="110" rx="7" fill="#1f0f00" stroke="#cd6f00" stroke-width="1.5"/>
+  <rect x="222" y="122" width="228" height="26" rx="7" fill="#cd6f00" opacity="0.85"/>
+  <rect x="222" y="136" width="228" height="12" fill="#cd6f00" opacity="0.85"/>
+  <text x="336" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">bronze.ops_flights</text>
+  <text x="234" y="160" font-size="8" fill="#cc9944">flight_id, airline_name, airline_code</text>
+  <text x="234" y="172" font-size="8" fill="#cc9944">origin/destination_airport, aircraft_type</text>
+  <text x="234" y="184" font-size="8" fill="#cc9944">scheduled/actual departure/arrival (VARCHAR)</text>
+  <text x="234" y="196" font-size="8" fill="#cc9944">seat_capacity, booked_passengers, load_factor</text>
+  <text x="234" y="208" font-size="8" fill="#cc9944">delay_category, route_type, season + DWH meta</text>
+  <text x="336" y="225" text-anchor="middle" font-size="8" fill="#886622" font-style="italic">Source: flights.csv</text>
+
+  <!-- bronze.ops_baggage -->
+  <rect x="222" y="248" width="228" height="100" rx="7" fill="#1f0f00" stroke="#cd6f00" stroke-width="1.5"/>
+  <rect x="222" y="248" width="228" height="26" rx="7" fill="#cd6f00" opacity="0.85"/>
+  <rect x="222" y="262" width="228" height="12" fill="#cd6f00" opacity="0.85"/>
+  <text x="336" y="265" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">bronze.ops_baggage</text>
+  <text x="234" y="286" font-size="8" fill="#cc9944">baggage_tag_number, passenger_id, flight_id</text>
+  <text x="234" y="298" font-size="8" fill="#cc9944">passenger_passport_number, baggage_weight_kg</text>
+  <text x="234" y="310" font-size="8" fill="#cc9944">baggage_type, baggage_status, baggage_location</text>
+  <text x="234" y="322" font-size="8" fill="#cc9944">oversized/damaged_flag, delay_minutes + DWH</text>
+  <text x="336" y="340" text-anchor="middle" font-size="8" fill="#886622" font-style="italic">Source: baggage.csv</text>
+
+  <!-- bronze.ops_gate_events -->
+  <rect x="222" y="364" width="228" height="100" rx="7" fill="#1f0f00" stroke="#cd6f00" stroke-width="1.5"/>
+  <rect x="222" y="364" width="228" height="26" rx="7" fill="#cd6f00" opacity="0.85"/>
+  <rect x="222" y="378" width="228" height="12" fill="#cd6f00" opacity="0.85"/>
+  <text x="336" y="381" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">bronze.ops_gate_events</text>
+  <text x="234" y="402" font-size="8" fill="#cc9944">gate_event_id, flight_id, gate_number</text>
+  <text x="234" y="414" font-size="8" fill="#cc9944">terminal, event_type, event_timestamp (VARCHAR)</text>
+  <text x="234" y="426" font-size="8" fill="#cc9944">staff_id, passenger_count, event_category</text>
+  <text x="234" y="438" font-size="8" fill="#cc9944">gate_change_flag, gate_open/close_time + DWH</text>
+  <text x="336" y="456" text-anchor="middle" font-size="8" fill="#886622" font-style="italic">Source: gate_events.csv</text>
+
+  <!-- bronze.pax_passengers -->
+  <rect x="222" y="480" width="228" height="100" rx="7" fill="#1f0f00" stroke="#cd6f00" stroke-width="1.5"/>
+  <rect x="222" y="480" width="228" height="26" rx="7" fill="#cd6f00" opacity="0.85"/>
+  <rect x="222" y="494" width="228" height="12" fill="#cd6f00" opacity="0.85"/>
+  <text x="336" y="497" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">bronze.pax_passengers</text>
+  <text x="234" y="518" font-size="8" fill="#cc9944">passenger_id, loyalty_number, passport_number</text>
+  <text x="234" y="530" font-size="8" fill="#cc9944">first_name, last_name, nationality, gender</text>
+  <text x="234" y="542" font-size="8" fill="#cc9944">flight_number, checkin_time, boarding_time</text>
+  <text x="234" y="554" font-size="8" fill="#cc9944">no_show_flag, vip_flag, satisfaction_score + DWH</text>
+  <text x="336" y="572" text-anchor="middle" font-size="8" fill="#886622" font-style="italic">Source: passengers.csv</text>
+
+  <!-- bronze.ret_retail_transactions -->
+  <rect x="222" y="596" width="228" height="100" rx="7" fill="#1f0f00" stroke="#cd6f00" stroke-width="1.5"/>
+  <rect x="222" y="596" width="228" height="26" rx="7" fill="#cd6f00" opacity="0.85"/>
+  <rect x="222" y="610" width="228" height="12" fill="#cd6f00" opacity="0.85"/>
+  <text x="336" y="613" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">bronze.ret_retail_transactions</text>
+  <text x="234" y="634" font-size="8" fill="#cc9944">transaction_id, staff_id, store_name</text>
+  <text x="234" y="646" font-size="8" fill="#cc9944">passenger_passport_number, flight_number</text>
+  <text x="234" y="658" font-size="8" fill="#cc9944">product_category, quantity, unit_price, total_amount</text>
+  <text x="234" y="670" font-size="8" fill="#cc9944">payment_method, currency, duty_free_flag + DWH</text>
+  <text x="336" y="688" text-anchor="middle" font-size="8" fill="#886622" font-style="italic">Source: retail_transactions.csv</text>
+
+  <!-- ════════════════════════════════════════
+       SILVER TABLES  (x=466)
+  ════════════════════════════════════════ -->
+
+  <!-- silver.ops_flights -->
+  <rect x="466" y="122" width="250" height="120" rx="7" fill="#051a0e" stroke="#3a9960" stroke-width="1.5"/>
+  <rect x="466" y="122" width="250" height="26" rx="7" fill="#2a7d47" opacity="0.9"/>
+  <rect x="466" y="136" width="250" height="12" fill="#2a7d47" opacity="0.9"/>
+  <text x="591" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">silver.ops_flights</text>
+  <text x="478" y="160" font-size="8" fill="#52d68a">✔ DATETIME cast (STR_TO_DATE)</text>
+  <text x="478" y="172" font-size="8" fill="#52d68a">✔ Airport codes → city names (14 mappings)</text>
+  <text x="478" y="184" font-size="8" fill="#52d68a">✔ delay_reason abbr → full text (ATC/WX/TECH…)</text>
+  <text x="478" y="196" font-size="8" fill="#52d68a">✔ delay_category recalculated from delay_minutes</text>
+  <text x="478" y="208" font-size="8" fill="#52d68a">✔ booked_passengers capped at seat_capacity</text>
+  <text x="478" y="220" font-size="8" fill="#52d68a">✔ Booleans → TINYINT · load_factor capped 100</text>
+  <text x="591" y="234" text-anchor="middle" font-size="8" fill="#226633" font-style="italic">Script: ddl_silver_flights_ops.sql</text>
+
+  <!-- silver.ops_baggage -->
+  <rect x="466" y="258" width="250" height="110" rx="7" fill="#051a0e" stroke="#3a9960" stroke-width="1.5"/>
+  <rect x="466" y="258" width="250" height="26" rx="7" fill="#2a7d47" opacity="0.9"/>
+  <rect x="466" y="272" width="250" height="12" fill="#2a7d47" opacity="0.9"/>
+  <text x="591" y="275" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">silver.ops_baggage</text>
+  <text x="478" y="296" font-size="8" fill="#52d68a">✔ baggage_weight_kg → DECIMAL(8,4)</text>
+  <text x="478" y="308" font-size="8" fill="#52d68a">✔ checkin_time parsed MM/DD/YY HH:MM → DATETIME</text>
+  <text x="478" y="320" font-size="8" fill="#52d68a">✔ baggage_scan_time derived (checkin + 5–30 min)</text>
+  <text x="478" y="332" font-size="8" fill="#52d68a">✔ baggage_loaded_time derived (scan + 10–60 min)</text>
+  <text x="478" y="344" font-size="8" fill="#52d68a">✔ Booleans → TINYINT · terminal_number → INT</text>
+  <text x="591" y="360" text-anchor="middle" font-size="8" fill="#226633" font-style="italic">Script: ddl_silver_baggage_ops.sql</text>
+
+  <!-- silver.ops_gate_events -->
+  <rect x="466" y="384" width="250" height="110" rx="7" fill="#051a0e" stroke="#3a9960" stroke-width="1.5"/>
+  <rect x="466" y="384" width="250" height="26" rx="7" fill="#2a7d47" opacity="0.9"/>
+  <rect x="466" y="398" width="250" height="12" fill="#2a7d47" opacity="0.9"/>
+  <text x="591" y="401" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">silver.ops_gate_events</text>
+  <text x="478" y="422" font-size="8" fill="#52d68a">✔ event_timestamp → DATETIME (STR_TO_DATE)</text>
+  <text x="478" y="434" font-size="8" fill="#52d68a">✔ gate_change_flag → TINYINT</text>
+  <text x="478" y="446" font-size="8" fill="#52d68a">✔ gate_open_time derived (event_ts − 45 min)</text>
+  <text x="478" y="458" font-size="8" fill="#52d68a">✔ gate_close_time derived (event_ts + 45 min)</text>
+  <text x="478" y="470" font-size="8" fill="#52d68a">✔ boarding_completion_time (event_ts + 30 min)</text>
+  <text x="591" y="486" text-anchor="middle" font-size="8" fill="#226633" font-style="italic">Script: silver.ops_gate_events.sql</text>
+
+  <!-- silver.pax_passengers -->
+  <rect x="466" y="510" width="250" height="120" rx="7" fill="#051a0e" stroke="#3a9960" stroke-width="1.5"/>
+  <rect x="466" y="510" width="250" height="26" rx="7" fill="#2a7d47" opacity="0.9"/>
+  <rect x="466" y="524" width="250" height="12" fill="#2a7d47" opacity="0.9"/>
+  <text x="591" y="527" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">silver.pax_passengers</text>
+  <text x="478" y="548" font-size="8" fill="#52d68a">✔ gender: M/F → Male/Female/n/a</text>
+  <text x="478" y="560" font-size="8" fill="#52d68a">✔ booking_channel: travel class values → n/a</text>
+  <text x="478" y="572" font-size="8" fill="#52d68a">✔ passenger_age recalculated from date_of_birth</text>
+  <text x="478" y="584" font-size="8" fill="#52d68a">✔ age_group rederived (Child/Youth/Adult/Senior)</text>
+  <text x="478" y="596" font-size="8" fill="#52d68a">✔ satisfaction_score: negative → NULL</text>
+  <text x="478" y="608" font-size="8" fill="#52d68a">✔ 5 sparse columns removed · Booleans → TINYINT</text>
+  <text x="591" y="622" text-anchor="middle" font-size="8" fill="#226633" font-style="italic">Script: ddl_silver_passengers_pax.sql</text>
+
+  <!-- silver.ret_retail_transactions -->
+  <rect x="466" y="646" width="250" height="120" rx="7" fill="#051a0e" stroke="#3a9960" stroke-width="1.5"/>
+  <rect x="466" y="646" width="250" height="26" rx="7" fill="#2a7d47" opacity="0.9"/>
+  <rect x="466" y="660" width="250" height="12" fill="#2a7d47" opacity="0.9"/>
+  <text x="591" y="663" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">silver.ret_retail_transactions</text>
+  <text x="478" y="684" font-size="8" fill="#52d68a">✔ product_category derived from total_amount</text>
+  <text x="478" y="696" font-size="8" fill="#52d68a">✔ store_category derived (F&amp;B/Retail/Luxury Retail)</text>
+  <text x="478" y="708" font-size="8" fill="#52d68a">✔ unit_price corrected (LEAST of price vs amount)</text>
+  <text x="478" y="720" font-size="8" fill="#52d68a">✔ quantity recalculated · calculated_amount added</text>
+  <text x="478" y="732" font-size="8" fill="#52d68a">✔ payment_method, terminal, store_location derived</text>
+  <text x="478" y="744" font-size="8" fill="#52d68a">✔ duty_free_flag derived · loyalty_points derived</text>
+  <text x="591" y="758" text-anchor="middle" font-size="8" fill="#226633" font-style="italic">Script: ddl_silver_ret_retail_transactions.sql</text>
+
+  <!-- ════════════════════════════════════════
+       GOLD VIEWS  (x=732)
+  ════════════════════════════════════════ -->
+
+  <!-- gold.dim_flights -->
+  <rect x="732" y="122" width="300" height="120" rx="7" fill="#1a1100" stroke="#c89b00" stroke-width="1.5"/>
+  <rect x="732" y="122" width="300" height="26" rx="7" fill="#a07800" opacity="0.9"/>
+  <rect x="732" y="136" width="300" height="12" fill="#a07800" opacity="0.9"/>
+  <text x="882" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">gold.dim_flights  (VIEW)</text>
+  <text x="744" y="160" font-size="8" fill="#ffd84d">Source: silver.ops_flights</text>
+  <text x="744" y="172" font-size="8" fill="#ccaa33">flight_key (ROW_NUMBER), flight_id, airline_name</text>
+  <text x="744" y="184" font-size="8" fill="#ccaa33">route_name (CONCAT origin–dest), route_type</text>
+  <text x="744" y="196" font-size="8" fill="#ccaa33">delay_category, international_flag, weekend_flag</text>
+  <text x="744" y="208" font-size="8" fill="#ccaa33">load_factor recalculated, ticket_revenue, season</text>
+  <text x="882" y="232" text-anchor="middle" font-size="8" fill="#665500" font-style="italic">ddl_gold.sql</text>
+
+  <!-- gold.dim_passengers -->
+  <rect x="732" y="258" width="300" height="120" rx="7" fill="#1a1100" stroke="#c89b00" stroke-width="1.5"/>
+  <rect x="732" y="258" width="300" height="26" rx="7" fill="#a07800" opacity="0.9"/>
+  <rect x="732" y="272" width="300" height="12" fill="#a07800" opacity="0.9"/>
+  <text x="882" y="275" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">gold.dim_passengers  (VIEW)</text>
+  <text x="744" y="296" font-size="8" fill="#ffd84d">Source: silver.pax_passengers</text>
+  <text x="744" y="308" font-size="8" fill="#ccaa33">passenger_key (ROW_NUMBER), passenger_id</text>
+  <text x="744" y="320" font-size="8" fill="#ccaa33">passenger_name (CONCAT first+last), nationality</text>
+  <text x="744" y="332" font-size="8" fill="#ccaa33">travel_class, vip_flag, no_show_flag, age_group</text>
+  <text x="744" y="344" font-size="8" fill="#ccaa33">passenger_segment derived (VIP/Premium/Business/Regular)</text>
+  <text x="882" y="368" text-anchor="middle" font-size="8" fill="#665500" font-style="italic">ddl_gold.sql</text>
+
+  <!-- gold.fact_flight_operations -->
+  <rect x="1048" y="122" width="330" height="150" rx="7" fill="#1a1100" stroke="#c89b00" stroke-width="1.5"/>
+  <rect x="1048" y="122" width="330" height="26" rx="7" fill="#a07800" opacity="0.9"/>
+  <rect x="1048" y="136" width="330" height="12" fill="#a07800" opacity="0.9"/>
+  <text x="1213" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">gold.fact_flight_operations  (VIEW)</text>
+  <text x="1060" y="160" font-size="8" fill="#ffd84d">Joins: silver.ops_flights ⟕ dim_flights ⟕ pax_passengers ⟕ ops_baggage</text>
+  <text x="1060" y="172" font-size="8" fill="#ccaa33">Join key: f.flight_id = p.flight_number = b.flight_id</text>
+  <text x="1060" y="184" font-size="8" fill="#ccaa33">flight_key, departure/arrival delay_minutes (TIMESTAMPDIFF)</text>
+  <text x="1060" y="196" font-size="8" fill="#ccaa33">passenger_count (COUNT DISTINCT), baggage_count</text>
+  <text x="1060" y="208" font-size="8" fill="#ccaa33">avg_baggage_weight_kg, baggage_issue_count</text>
+  <text x="1060" y="220" font-size="8" fill="#ccaa33">airline_revenue_rank (DENSE_RANK PARTITION BY airline)</text>
+  <text x="1060" y="232" font-size="8" fill="#ccaa33">overall_delay_rank (DENSE_RANK global)</text>
+  <text x="1213" y="262" text-anchor="middle" font-size="8" fill="#665500" font-style="italic">ddl_gold.sql</text>
+
+  <!-- gold.fact_passenger_journey -->
+  <rect x="1048" y="288" width="330" height="150" rx="7" fill="#1a1100" stroke="#c89b00" stroke-width="1.5"/>
+  <rect x="1048" y="288" width="330" height="26" rx="7" fill="#a07800" opacity="0.9"/>
+  <rect x="1048" y="302" width="330" height="12" fill="#a07800" opacity="0.9"/>
+  <text x="1213" y="305" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">gold.fact_passenger_journey  (VIEW)</text>
+  <text x="1060" y="326" font-size="8" fill="#ffd84d">Joins: pax_passengers ⟕ dim_passengers ⟕ dim_flights ⟕ ops_gate_events</text>
+  <text x="1060" y="338" font-size="8" fill="#ccaa33">Join keys: p.passenger_id, p.flight_number = df.flight_id</text>
+  <text x="1060" y="350" font-size="8" fill="#ccaa33">  gate join: p.flight_number = ge.flight_id AND p.gate_number = ge.gate_number</text>
+  <text x="1060" y="362" font-size="8" fill="#ccaa33">checkin_to_boarding_minutes (TIMESTAMPDIFF)</text>
+  <text x="1060" y="374" font-size="8" fill="#ccaa33">boarding_status derived (No Show / Boarded / Not Boarded)</text>
+  <text x="1060" y="386" font-size="8" fill="#ccaa33">passenger_trip_number (ROW_NUMBER PARTITION BY passenger)</text>
+  <text x="1060" y="398" font-size="8" fill="#ccaa33">avg_nationality_satisfaction_score (AVG OVER nationality)</text>
+  <text x="1213" y="428" text-anchor="middle" font-size="8" fill="#665500" font-style="italic">ddl_gold.sql</text>
+
+  <!-- gold.fact_baggage -->
+  <rect x="732" y="398" width="300" height="150" rx="7" fill="#1a1100" stroke="#c89b00" stroke-width="1.5"/>
+  <rect x="732" y="398" width="300" height="26" rx="7" fill="#a07800" opacity="0.9"/>
+  <rect x="732" y="412" width="300" height="12" fill="#a07800" opacity="0.9"/>
+  <text x="882" y="415" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">gold.fact_baggage  (VIEW)</text>
+  <text x="744" y="436" font-size="8" fill="#ffd84d">Joins: silver.ops_baggage ⟕ dim_flights ⟕ dim_passengers</text>
+  <text x="744" y="448" font-size="8" fill="#ccaa33">Join keys: b.flight_id = df.flight_id, b.passenger_id = dp.passenger_id</text>
+  <text x="744" y="460" font-size="8" fill="#ccaa33">flight_key, passenger_key (from dims)</text>
+  <text x="744" y="472" font-size="8" fill="#ccaa33">baggage_issue_category derived (Critical/Damaged/Delayed/Normal)</text>
+  <text x="744" y="484" font-size="8" fill="#ccaa33">checkin_to_scan_minutes (TIMESTAMPDIFF)</text>
+  <text x="744" y="496" font-size="8" fill="#ccaa33">scan_to_load_minutes (TIMESTAMPDIFF)</text>
+  <text x="744" y="508" font-size="8" fill="#ccaa33">baggage_weight_rank_in_flight (ROW_NUMBER)</text>
+  <text x="744" y="520" font-size="8" fill="#ccaa33">avg_baggage_weight_per_flight (AVG OVER flight)</text>
+  <text x="882" y="538" text-anchor="middle" font-size="8" fill="#665500" font-style="italic">ddl_gold.sql</text>
+
+  <!-- gold.fact_retail_sales -->
+  <rect x="1048" y="454" width="330" height="180" rx="7" fill="#1a1100" stroke="#c89b00" stroke-width="1.5"/>
+  <rect x="1048" y="454" width="330" height="26" rx="7" fill="#a07800" opacity="0.9"/>
+  <rect x="1048" y="468" width="330" height="12" fill="#a07800" opacity="0.9"/>
+  <text x="1213" y="471" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">gold.fact_retail_sales  (VIEW)</text>
+  <text x="1060" y="492" font-size="8" fill="#ffd84d">Joins: ret_retail_transactions ⟕ pax_passengers ⟕ ops_flights ⟕ dim_passengers ⟕ dim_flights</text>
+  <text x="1060" y="504" font-size="8" fill="#ccaa33">Join: r.passport_number = p.passport_number</text>
+  <text x="1060" y="516" font-size="8" fill="#ccaa33">Join: r.flight_number = f.flight_id</text>
+  <text x="1060" y="528" font-size="8" fill="#ccaa33">passenger_key, flight_key (from dims)</text>
+  <text x="1060" y="540" font-size="8" fill="#ccaa33">total_retail_sales_per_flight (SUM OVER flight)</text>
+  <text x="1060" y="552" font-size="8" fill="#ccaa33">total_retail_sales_per_terminal (SUM OVER terminal)</text>
+  <text x="1060" y="564" font-size="8" fill="#ccaa33">avg_spend_by_nationality (AVG OVER nationality)</text>
+  <text x="1060" y="576" font-size="8" fill="#ccaa33">spend_rank_within_terminal (DENSE_RANK)</text>
+  <text x="1060" y="588" font-size="8" fill="#ccaa33">passenger_purchase_sequence (ROW_NUMBER)</text>
+  <text x="1213" y="624" text-anchor="middle" font-size="8" fill="#665500" font-style="italic">ddl_gold.sql · filtered by silver.pax &amp; silver.ops_flights</text>
+
+  <!-- ════════════════════════════════════════
+       ARROWS: SOURCE → BRONZE
+  ════════════════════════════════════════ -->
+  <!-- flights.csv → bronze.ops_flights (midpoints ~194) -->
+  <line x1="194" y1="194" x2="222" y2="177" stroke="#cd6f00" stroke-width="1.5" marker-end="url(#arrow-bronze)"/>
+  <!-- baggage.csv → bronze.ops_baggage -->
+  <line x1="194" y1="254" x2="222" y2="298" stroke="#cd6f00" stroke-width="1.5" marker-end="url(#arrow-bronze)"/>
+  <!-- gate_events.csv → bronze.ops_gate_events -->
+  <line x1="194" y1="314" x2="222" y2="414" stroke="#cd6f00" stroke-width="1.5" marker-end="url(#arrow-bronze)"/>
+  <!-- passengers.csv → bronze.pax_passengers -->
+  <line x1="194" y1="528" x2="222" y2="530" stroke="#cd6f00" stroke-width="1.5" marker-end="url(#arrow-bronze)"/>
+  <!-- retail_transactions.csv → bronze.ret_retail_transactions -->
+  <line x1="194" y1="588" x2="222" y2="646" stroke="#cd6f00" stroke-width="1.5" marker-end="url(#arrow-bronze)"/>
+
+  <!-- ════════════════════════════════════════
+       ARROWS: BRONZE → SILVER (INSERT INTO SELECT)
+  ════════════════════════════════════════ -->
+  <line x1="450" y1="182" x2="466" y2="182" stroke="#3a9960" stroke-width="2" marker-end="url(#arrow-silver)"/>
+  <line x1="450" y1="298" x2="466" y2="313" stroke="#3a9960" stroke-width="2" marker-end="url(#arrow-silver)"/>
+  <line x1="450" y1="414" x2="466" y2="439" stroke="#3a9960" stroke-width="2" marker-end="url(#arrow-silver)"/>
+  <line x1="450" y1="530" x2="466" y2="570" stroke="#3a9960" stroke-width="2" marker-end="url(#arrow-silver)"/>
+  <line x1="450" y1="646" x2="466" y2="701" stroke="#3a9960" stroke-width="2" marker-end="url(#arrow-silver)"/>
+
+  <!-- ════════════════════════════════════════
+       ARROWS: SILVER → GOLD DIMS
+  ════════════════════════════════════════ -->
+  <!-- ops_flights → dim_flights -->
+  <line x1="716" y1="182" x2="732" y2="182" stroke="#c89b00" stroke-width="2" marker-end="url(#arrow-gold)"/>
+  <!-- pax_passengers → dim_passengers -->
+  <line x1="716" y1="570" x2="726" y2="318" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-gold)"/>
+
+  <!-- ════════════════════════════════════════
+       ARROWS: SILVER → GOLD FACTS
+  ════════════════════════════════════════ -->
+  <!-- ops_flights → fact_flight_operations -->
+  <line x1="716" y1="197" x2="1048" y2="197" stroke="#c89b00" stroke-width="1.5" marker-end="url(#arrow-gold)"/>
+  <!-- ops_baggage → fact_flight_operations -->
+  <line x1="716" y1="313" x2="730" y2="220" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="730" y1="220" x2="1048" y2="210" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-gold)"/>
+  <!-- pax_passengers → fact_flight_operations -->
+  <line x1="716" y1="580" x2="720" y2="580"/>
+
+  <!-- pax_passengers → fact_passenger_journey -->
+  <line x1="716" y1="570" x2="724" y2="360" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="724" y1="360" x2="1048" y2="360" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-gold)"/>
+  <!-- gate_events → fact_passenger_journey -->
+  <line x1="716" y1="439" x2="728" y2="380" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="728" y1="380" x2="1048" y2="374" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-gold)"/>
+
+  <!-- ops_baggage → fact_baggage -->
+  <line x1="716" y1="313" x2="732" y2="473" stroke="#c89b00" stroke-width="1.5" marker-end="url(#arrow-gold)"/>
+
+  <!-- ret_retail_transactions → fact_retail_sales -->
+  <line x1="716" y1="701" x2="730" y2="701" stroke="#c89b00" stroke-width="1.5"/>
+  <line x1="730" y1="701" x2="730" y2="544" stroke="#c89b00" stroke-width="1.5"/>
+  <line x1="730" y1="544" x2="1048" y2="544" stroke="#c89b00" stroke-width="1.5" marker-end="url(#arrow-gold)"/>
+  <!-- pax_passengers → fact_retail_sales -->
+  <line x1="716" y1="570" x2="718" y2="524" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="718" y1="524" x2="1048" y2="524" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-gold)"/>
+
+  <!-- dims used by facts (dim_flights → facts) -->
+  <line x1="1032" y1="182" x2="1048" y2="182" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-gold)"/>
+  <line x1="1032" y1="318" x2="1048" y2="330" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-gold)"/>
+
+  <!-- ════════════════════════════════════════
+       LEGEND + KEY JOINS FOOTER
+  ════════════════════════════════════════ -->
+  <rect x="18" y="800" width="1364" height="162" rx="8" fill="#0d1623" stroke="#1e3050" stroke-width="1.5"/>
+
+  <text x="36" y="822" font-size="10" font-weight="700" fill="#7ab3e0">LEGEND</text>
+
+  <!-- source arrow -->
+  <line x1="36" y1="840" x2="80" y2="840" stroke="#cd6f00" stroke-width="2" marker-end="url(#arrow-bronze)"/>
+  <text x="88" y="844" font-size="9" fill="#aaa">Source → Bronze (LOAD DATA INFILE, all VARCHAR)</text>
+
+  <line x1="36" y1="858" x2="80" y2="858" stroke="#3a9960" stroke-width="2" marker-end="url(#arrow-silver)"/>
+  <text x="88" y="862" font-size="9" fill="#aaa">Bronze → Silver (INSERT INTO … SELECT with transformations, TRUNCATE first)</text>
+
+  <line x1="36" y1="876" x2="80" y2="876" stroke="#c89b00" stroke-width="2" marker-end="url(#arrow-gold)"/>
+  <text x="88" y="880" font-size="9" fill="#aaa">Silver → Gold (CREATE VIEW, no data copied — views read silver directly)</text>
+
+  <line x1="36" y1="894" x2="80" y2="894" stroke="#c89b00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-gold)"/>
+  <text x="88" y="898" font-size="9" fill="#aaa">Supporting join (dashed) — secondary table joined inside the same view</text>
+
+  <!-- key joins column -->
+  <text x="500" y="822" font-size="10" font-weight="700" fill="#7ab3e0">KEY JOIN COLUMNS (from ddl_gold.sql)</text>
+  <text x="500" y="840" font-size="9" fill="#aaa">flight_id  →  links ops_flights ↔ ops_baggage ↔ ops_gate_events ↔ pax_passengers (as flight_number) ↔ ret_retail_transactions (as flight_number)</text>
+  <text x="500" y="856" font-size="9" fill="#aaa">passenger_id  →  links pax_passengers ↔ ops_baggage ↔ dim_passengers</text>
+  <text x="500" y="872" font-size="9" fill="#aaa">passenger_passport_number  →  links pax_passengers ↔ ret_retail_transactions ↔ ops_baggage</text>
+  <text x="500" y="888" font-size="9" fill="#aaa">gate_number + flight_id  →  links pax_passengers ↔ ops_gate_events (dual-key join in fact_passenger_journey)</text>
+  <text x="500" y="904" font-size="9" fill="#aaa">ret_retail_transactions filtered by: passport_number IN silver.pax_passengers AND flight_number IN silver.ops_flights</text>
+
+  <text x="500" y="924" font-size="9" fill="#665533">Database: aviation_dw (MySQL 8, utf8mb4)  ·  Schemas: bronze | silver | gold  ·  All DDL in: scripts/  ·  Profiling: bronze-analysis-and-proofing/  ·  Quality checks: tests/quality_checks_silver.sql</text>
+
+  <!-- data catalog -->
+  <text x="1060" y="822" font-size="10" font-weight="700" fill="#7ab3e0">DOCS</text>
+  <text x="1060" y="840" font-size="9" fill="#aaa">docs/data_catalog_gold.md</text>
+  <text x="1060" y="856" font-size="9" fill="#aaa">docs/naming_conventions.md</text>
+  <text x="1060" y="872" font-size="9" fill="#aaa">Naming: &lt;schema&gt;.&lt;domain&gt;_&lt;entity&gt;</text>
+  <text x="1060" y="888" font-size="9" fill="#aaa">ops = operations · pax = passenger</text>
+  <text x="1060" y="904" font-size="9" fill="#aaa">ret = retail · DWH meta: dwh_* suffix</text>
+
+</svg>
